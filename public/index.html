@@ -10,7 +10,22 @@
   </head>
 
   <body>
-    <h1>MORO NÄÄS!</h1>
-    <script src="js/scripts.js"></script>
+    <h1>Koordinaatit:</h1>
+
+    <ul></ul>
+    <script>
+      const main = async () => {
+        let result = await fetch("http://localhost:3000/api/locations");
+        let data = await result.json();
+        modifyUI(data);
+      };
+      const modifyUI = (data) => {
+        let ul = document.querySelector("ul");
+        ul.innerHTML = data
+          .map((i) => `<li>Lat: ${i.latitude} - Lon: ${i.longitude}</li>`)
+          .join("");
+      };
+      main();
+    </script>
   </body>
 </html>
