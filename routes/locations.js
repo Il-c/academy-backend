@@ -32,7 +32,15 @@ router.delete("/:id", function (req, res) {
 router.post("/", function (req, res) {
   let newLoc = req.body;
   let response = database.addItem(newLoc);
-  res.setHeader("Location", req.baseUrl + req.path + response.id);
+  res.setHeader(
+    "Location",
+    req.protocol +
+      "://" +
+      req.get("host") +
+      req.baseUrl +
+      req.path +
+      response.id
+  );
   res.status(201);
   res.send(response);
 });
