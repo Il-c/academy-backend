@@ -1,9 +1,6 @@
 var express = require("express");
 var router = express.Router();
-let database = [
-  { id: 1, latitude: 60, longitude: 70 },
-  { id: 2, latitude: 40, longitude: 80 },
-];
+const database = require("../database/crudrepository.js");
 
 router.use(function timeLog(req, res, next) {
   console.log("Time: ", Date.now());
@@ -11,7 +8,7 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get("/", function (req, res) {
-  res.json(database);
+  res.json(database.findAll());
 });
 
 router.get("/pretty", function (req, res) {
@@ -19,8 +16,25 @@ router.get("/pretty", function (req, res) {
   res.send(JSON.stringify(database, null, 2));
 });
 
-router.get("/1", function (req, res) {
-  res.send(database[0]);
+router.get("/:id", function (req, res) {
+  let response = database.findById(req.params.id);
+  response == undefined && res.status(404);
+  res.send(response);
+});
+
+router.delete("/:id", function (req, res) {
+  //let newDB = database.filter((i) => i.id !== Number(req.params.id));
+  let response = database.deleteById(req.params.id);
+  res.status(response ? 204 : 404);
+  res.send();
+});
+
+router.post("/", function (req, res) {
+  let newLoc = req.body;
+  let response = database.addItem(newLoc);
+  res.setHeader("Location", req.baseUrl + req.path + response.id);
+  res.status(201);
+  res.send(response);
 });
 
 module.exports = router;

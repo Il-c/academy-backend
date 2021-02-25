@@ -7,6 +7,7 @@ var mikkihiirirouter = require("./routes/mikkihiiri.js");
 var locationsrouter = require("./routes/locations.js");
 
 app.use(express.static("public"));
+app.use(express.json());
 
 app.use("/api/locations", locationsrouter);
 app.use("/mikkihiiri", mikkihiirirouter);
