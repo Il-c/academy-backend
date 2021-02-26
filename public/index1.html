@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Oma Heroku sivu</title>
+    <meta name="description" content="Oma sivu" />
+    <meta name="author" content="SitePoint" />
+  </head>
+
+  <body>
+    <h1>Koordinaatit:</h1>
+
+    <ul></ul>
+    <script>
+      const main = async () => {
+        let result = await fetch("http://localhost:3000/api/locations");
+        let data = await result.json();
+        modifyUI(data);
+      };
+      const modifyUI = (data) => {
+        let ul = document.querySelector("ul");
+        ul.innerHTML = data
+          .map((i) => `<li>Lat: ${i.latitude} - Lon: ${i.longitude}</li>`)
+          .join("");
+      };
+      main();
+    </script>
+  </body>
+</html>
