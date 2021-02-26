@@ -8,19 +8,19 @@ GET http://localhost:3001/api/locations/3
 
 ###
 
-DELETE http://localhost:3001/api/locations/1
+DELETE http://localhost:3001/api/locations/3
 
 ###
 POST http://localhost:3001/api/locations/
 Content-type: application/json
 
 {
-    "latitude": 190,
+    "latitude": 50,
     "longitude": -160
 }
 
 ###
-PUT http://localhost:3001/api/locations/3
+PUT http://localhost:3001/api/locations/2
 Content-type: application/json
 
 {
