@@ -10,7 +10,7 @@ var locationsrouter = require("./routes/locations.js");
 app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   console.log(req.method);
   console.log(req.body);
   if (
@@ -27,7 +27,7 @@ app.use((req, res, next) => {
   } else {
     next();
   }
-});
+});*/
 
 app.use("/api/locations", locationsrouter);
 app.use("/mikkihiiri", mikkihiirirouter);

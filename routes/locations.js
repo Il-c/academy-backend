@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const database = require("../database/crudrepository.js");
+const { body, validationResult } = require("express-validator");
 
 router.use(function timeLog(req, res, next) {
   console.log("Time: ", Date.now());
@@ -29,21 +30,31 @@ router.delete("/:id", function (req, res) {
   res.send();
 });
 
-router.post("/", function (req, res) {
-  let newLoc = req.body;
-  let response = database.addItem(newLoc);
-  res.setHeader(
-    "Location",
-    req.protocol +
-      "://" +
-      req.get("host") +
-      req.baseUrl +
-      req.path +
-      response.id
-  );
-  res.status(201);
-  res.body = response;
-  res.send(response);
-});
+router.post(
+  "/",
+  body("latitude").isInt({ min: -90, max: 90 }).not().isEmpty(),
+  body("longitude").isInt({ min: -180, max: 180 }).not().isEmpty(),
+  function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    let newLoc = req.body;
+    let response = database.addItem(newLoc);
+    res.setHeader(
+      "Location",
+      req.protocol +
+        "://" +
+        req.get("host") +
+        req.baseUrl +
+        req.path +
+        response.id
+    );
+    res.status(201);
+    res.body = response;
+    res.send(response);
+  }
+);
 
 module.exports = router;
