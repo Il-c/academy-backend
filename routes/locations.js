@@ -42,6 +42,7 @@ router.post("/", function (req, res) {
       response.id
   );
   res.status(201);
+  res.body = response;
   res.send(response);
 });
 
