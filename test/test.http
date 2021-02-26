@@ -15,6 +15,6 @@ POST http://localhost:3001/api/locations/
 Content-type: application/json
 
 {
-    "latitude": null,
+    "latitude": 190,
     "longitude": -160
 }
