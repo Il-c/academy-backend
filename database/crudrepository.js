@@ -23,4 +23,9 @@ module.exports = {
     database.push(item);
     return item;
   },
+  updateItem: (item, id) => {
+    item.id = Number(id);
+    database[id] = item;
+    return database[id];
+  },
 };

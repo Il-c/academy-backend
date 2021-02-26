@@ -18,3 +18,12 @@ Content-type: application/json
     "latitude": 190,
     "longitude": -160
 }
+
+###
+PUT http://localhost:3001/api/locations/3
+Content-type: application/json
+
+{
+    "latitude": 70,
+    "longitude": -160
+}

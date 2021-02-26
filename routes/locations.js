@@ -57,4 +57,26 @@ router.post(
   }
 );
 
+router.put(
+  "/:id",
+  body("latitude").isInt({ min: -90, max: 90 }).not().isEmpty(),
+  body("longitude").isInt({ min: -180, max: 180 }).not().isEmpty(),
+  function (req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    let newLoc = req.body;
+    let response = database.updateItem(newLoc, req.params.id);
+    res.setHeader(
+      "Location",
+      req.protocol + "://" + req.get("host") + req.baseUrl + req.path
+    );
+    res.status(201);
+    res.body = response;
+    res.send(response);
+  }
+);
+
 module.exports = router;
